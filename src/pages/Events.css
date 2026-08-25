@@ -1,0 +1,25 @@
+.events-page{
+    max-width:1300px;
+    margin:auto;
+    padding:50px 20px;
+}
+
+.events-page h1{
+    text-align:center;
+    color:#e91e63;
+    margin-bottom:15px;
+    font-size:40px;
+}
+
+.events-subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:50px;
+    font-size:18px;
+}
+
+.events-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}

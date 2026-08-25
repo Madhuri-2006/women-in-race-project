@@ -1,0 +1,53 @@
+.athlete-card {
+  width: 300px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.athlete-card:hover {
+  transform: translateY(-8px);
+}
+
+.athlete-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.athlete-info {
+  padding: 20px;
+}
+
+.athlete-info h3 {
+  color: #e91e63;
+  margin-bottom: 15px;
+}
+
+.athlete-info p {
+  margin: 8px 0;
+}
+
+.profile-btn {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: none;
+  background: #e91e63;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.profile-btn:hover {
+  background: #c2185b;
+}
+.athlete-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+}

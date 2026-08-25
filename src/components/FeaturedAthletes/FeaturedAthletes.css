@@ -1,0 +1,18 @@
+.featured-athletes {
+  padding: 80px 10%;
+  background-color: white;
+}
+
+.featured-athletes h2 {
+  text-align: center;
+  font-size: 40px;
+  color: #222;
+  margin-bottom: 50px;
+}
+
+.athlete-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}

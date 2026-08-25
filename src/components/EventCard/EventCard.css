@@ -1,0 +1,45 @@
+.event-card{
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 10px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.event-card:hover{
+    transform:translateY(-8px);
+}
+
+.event-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.event-content{
+    padding:20px;
+}
+
+.event-content h3{
+    color:#e91e63;
+    margin-bottom:15px;
+}
+
+.event-content p{
+    margin:10px 0;
+}
+
+.event-content button{
+    margin-top:15px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#e91e63;
+    color:#fff;
+    cursor:pointer;
+}
+
+.event-content button:hover{
+    background:#c2185b;
+}
