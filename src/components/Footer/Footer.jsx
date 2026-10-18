@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 function Footer() {
@@ -11,6 +12,10 @@ function Footer() {
 
       <p>
         © 2026 Women In Race. All Rights Reserved.
+      </p>
+
+      <p className="footer-admin">
+        <Link to="/admin/login">Admin login</Link>
       </p>
 
     </footer>

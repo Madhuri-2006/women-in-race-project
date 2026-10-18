@@ -1,0 +1,298 @@
+.inspire-page {
+  min-height: 80vh;
+  background: var(--color-bg);
+  padding: 70px 8% 100px;
+}
+
+.inspire-hero {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 44px;
+}
+
+.inspire-eyebrow {
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+
+.inspire-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 52px);
+  color: var(--color-text);
+}
+
+.inspire-hero h1 .accent {
+  color: var(--color-primary);
+}
+
+.inspire-sub {
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 16px;
+}
+
+/* form */
+
+.inspire-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inspire-card label {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.inspire-card textarea,
+.inspire-card select {
+  width: 100%;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+}
+
+.inspire-card textarea:focus,
+.inspire-card select:focus {
+  border-color: var(--color-primary);
+}
+
+.inspire-selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.inspire-btn {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 20px;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 26px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.inspire-btn:hover {
+  background: var(--color-primary-hover);
+}
+
+.sparkle {
+  color: var(--color-gold);
+  margin-right: 6px;
+}
+
+.inspire-error {
+  background: rgba(225, 29, 133, 0.1);
+  border: 1px solid var(--color-primary);
+  color: var(--color-text);
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.inspire-note {
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
+.inspire-note code {
+  font-family: var(--font-mono);
+  color: var(--color-gold);
+}
+
+/* loading */
+
+.inspire-loading {
+  max-width: 640px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.inspire-pulse {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  margin: 0 auto 22px;
+  animation: inspire-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes inspire-pulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.55; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.inspire-loading p {
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+/* result */
+
+.inspire-result {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: 20px;
+  padding: 36px;
+}
+
+.inspire-result-eyebrow {
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.inspire-result h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 36px);
+  color: var(--color-text);
+  margin: 6px 0 10px;
+}
+
+.inspire-sport-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+  border-radius: 999px;
+  padding: 3px 12px;
+}
+
+.inspire-message {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 22px 0;
+}
+
+.inspire-keymoment {
+  border-left: 3px solid var(--color-primary);
+  padding-left: 16px;
+  margin: 22px 0;
+}
+
+.inspire-keymoment-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.inspire-keymoment p {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-gold);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 6px;
+}
+
+.inspire-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.inspire-btn-ghost {
+  background: none;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  border-radius: 12px;
+  padding: 13px 22px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.inspire-btn-ghost:hover {
+  background: var(--color-gold);
+  color: #000;
+}
+
+.inspire-link-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.inspire-link-btn:hover {
+  color: var(--color-primary);
+}
+
+.inspire-source {
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+.inspire-browse {
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 14px;
+  margin-top: 40px;
+}
+
+.inspire-browse a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+@media (max-width: 560px) {
+  .inspire-selects {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,50 +1,26 @@
+import EventCard from "../EventCard/EventCard";
+import events from "../../data/events.json";
 import "./Events.css";
 
 function Events() {
   return (
-<section className="events" id="events">
+    <section className="events" id="events">
       <h2>Upcoming Events</h2>
 
       <div className="events-container">
-
-        <div className="event-card">
-
-          <h3>National Women's Marathon</h3>
-
-          <p><strong>Date:</strong> 15 August 2026</p>
-
-          <p><strong>Location:</strong> New Delhi</p>
-
-          <button>View Details</button>
-
-        </div>
-
-        <div className="event-card">
-
-          <h3>Women's Badminton Championship</h3>
-
-          <p><strong>Date:</strong> 28 September 2026</p>
-
-          <p><strong>Location:</strong> Hyderabad</p>
-
-          <button>View Details</button>
-
-        </div>
-
-        <div className="event-card">
-
-          <h3>National Athletics Meet</h3>
-
-          <p><strong>Date:</strong> 10 October 2026</p>
-
-          <p><strong>Location:</strong> Bengaluru</p>
-
-          <button>View Details</button>
-
-        </div>
-
+        {events.map((event) => (
+          <EventCard
+            key={event.id}
+            title={event.title}
+            date={event.date}
+            location={event.location}
+            image={event.image}
+            description={event.description}
+            imageCredit={event.imageCredit}
+            imageSourceUrl={event.imageSourceUrl}
+          />
+        ))}
       </div>
-
     </section>
   );
 }

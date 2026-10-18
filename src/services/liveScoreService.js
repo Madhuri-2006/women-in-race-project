@@ -15,15 +15,22 @@ export const addScore = async (score) => {
   return await addDoc(scoreCollection, score);
 };
 
-export const subscribeScores = (callback) => {
-  return onSnapshot(scoreCollection, (snapshot) => {
-    const scores = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+export const subscribeScores = (callback, onError) => {
+  return onSnapshot(
+    scoreCollection,
+    (snapshot) => {
+      const scores = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
 
-    callback(scores);
-  });
+      callback(scores);
+    },
+    (err) => {
+      console.warn("Live scores subscription unavailable:", err.code || err.message);
+      if (onError) onError(err);
+    }
+  );
 };
 
 export const updateScore = async (id, score) => {

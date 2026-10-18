@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import EventCard from "../components/EventCard/EventCard";
+import PageHeading from "../components/PageHeading/PageHeading";
 import { getEvents } from "../services/eventService";
 import "./Events.css";
 
@@ -20,11 +21,11 @@ function Events() {
     <Layout>
       <section className="events-page">
 
-        <h1>Upcoming Sports Events</h1>
-
-        <p className="events-subtitle">
-          Discover upcoming national and international women's sporting events.
-        </p>
+        <PageHeading
+          eyebrow="WHAT'S COMING UP"
+          title="Upcoming Sports Events"
+          subtitle="National and international women's sporting events to follow."
+        />
 
         <div className="events-grid">
 
@@ -36,6 +37,8 @@ function Events() {
               location={event.location}
               image={event.image}
               description={event.description}
+              imageCredit={event.imageCredit}
+              imageSourceUrl={event.imageSourceUrl}
             />
           ))}
 

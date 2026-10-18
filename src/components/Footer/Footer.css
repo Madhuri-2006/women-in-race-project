@@ -13,3 +13,12 @@
 .footer p {
   margin: 8px 0;
 }
+.footer-admin a {
+  color: #9ca3af;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.footer-admin a:hover {
+  color: #e91e63;
+}

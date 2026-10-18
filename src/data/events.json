@@ -4,7 +4,9 @@
     "title": "National Women's Marathon",
     "date": "15 August 2026",
     "location": "New Delhi",
-    "image": "marathon.jpg",
+    "image": "/images/events/marathon.jpg",
+    "imageCredit": "Photo via Wikimedia Commons",
+    "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Runner_at_Chennai_Marathon.jpg",
     "description": "India's biggest women's marathon promoting fitness and sports participation."
   },
   {
@@ -12,7 +14,9 @@
     "title": "Women's Badminton Championship",
     "date": "28 September 2026",
     "location": "Hyderabad",
-    "image": "badminton.jpg",
+    "image": "/images/events/badminton.jpg",
+    "imageCredit": "Photo via Wikimedia Commons",
+    "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Ms._Saina_Nehwal,_Badminton_player_shares_her_inspirational_journey_with_the_audience_under_the_series_-_Her_Story_-_My_Story_at_Rashtrapati_Bhavan,_in_New_Delhi_on_July_11,_2024_(2).jpg",
     "description": "National badminton championship featuring India's top women players."
   },
   {
@@ -20,7 +24,9 @@
     "title": "National Athletics Meet",
     "date": "10 October 2026",
     "location": "Bengaluru",
-    "image": "athletics.jpg",
+    "image": "/images/events/athletics.jpg",
+    "imageCredit": "Photo via Wikimedia Commons",
+    "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Swapna_Barman_Of_India,_Women_Heptathlon_Gold_Winner.jpg",
     "description": "Annual athletics championship for India's best women athletes."
   }
 ]

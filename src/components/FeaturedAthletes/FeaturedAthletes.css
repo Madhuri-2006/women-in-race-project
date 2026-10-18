@@ -16,3 +16,14 @@
   gap: 30px;
   flex-wrap: wrap;
 }
+
+.featured-status {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+}
+
+.featured-status a {
+  color: #e91e63;
+  font-weight: 500;
+}

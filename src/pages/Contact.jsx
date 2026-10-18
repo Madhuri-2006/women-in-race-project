@@ -1,4 +1,5 @@
 import Layout from "../components/Layout/Layout";
+import PageHeading from "../components/PageHeading/PageHeading";
 import "./Contact.css";
 
 function Contact() {
@@ -6,11 +7,11 @@ function Contact() {
     <Layout>
       <section className="contact-page">
 
-        <h1>Contact Us</h1>
-
-        <p className="contact-subtitle">
-          We'd love to hear from you.
-        </p>
+        <PageHeading
+          eyebrow="GET IN TOUCH"
+          title="Contact Us"
+          subtitle="We'd love to hear from you."
+        />
 
         <form className="contact-form">
 

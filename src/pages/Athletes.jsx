@@ -4,6 +4,8 @@ import Layout from "../components/Layout/Layout";
 import SearchBar from "../components/SearchBar/SearchBar";
 import SportFilter from "../components/SportFilter/SportFilter";
 import AthleteCard from "../components/AthleteCard/AthleteCard";
+import PageHeading from "../components/PageHeading/PageHeading";
+import { sortByPhotoFirst } from "../utils/athleteHelpers";
 
 function Athletes() {
   const [search, setSearch] = useState("");
@@ -18,17 +20,19 @@ function Athletes() {
   loadAthletes();
 }, []);
 
-  const filteredAthletes = athletes.filter((athlete) => {
-    const matchesSearch = athlete.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
+  const filteredAthletes = sortByPhotoFirst(
+    athletes.filter((athlete) => {
+      const matchesSearch = athlete.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
 
-    const matchesSport =
-      selectedSport === "All" ||
-      athlete.sport === selectedSport;
+      const matchesSport =
+        selectedSport === "All" ||
+        athlete.sport === selectedSport;
 
-    return matchesSearch && matchesSport;
-  });
+      return matchesSearch && matchesSport;
+    })
+  );
 
   return (
     <Layout>
@@ -39,15 +43,11 @@ function Athletes() {
           padding: "20px",
         }}
       >
-        <h1
-          style={{
-            textAlign: "center",
-            marginBottom: "30px",
-            color: "#e91e63",
-          }}
-        >
-          Women Athletes
-        </h1>
+        <PageHeading
+          eyebrow="MEET THE CHAMPIONS"
+          title="Women Athletes"
+          subtitle="Search or filter by sport to find any of the 120 women profiled here."
+        />
 
         <SearchBar
           search={search}
@@ -68,16 +68,7 @@ function Athletes() {
           }}
         >
           {filteredAthletes.map((athlete) => (
-            <AthleteCard
-              key={athlete.id}
-              id={athlete.id}
-              name={athlete.name}
-              sport={athlete.sport}
-              image={athlete.image}
-              age={athlete.age}
-              state={athlete.state}
-              medals={athlete.olympicMedals}
-            />
+            <AthleteCard key={athlete.id} athlete={athlete} />
           ))}
         </div>
       </div>

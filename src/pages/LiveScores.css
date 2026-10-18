@@ -1,34 +1,218 @@
-.live-page{
-    max-width:1200px;
-    margin:auto;
-    padding:40px 20px;
+.live-page {
+  min-height: 80vh;
+  background: var(--color-bg);
+  padding: 70px 8% 100px;
 }
 
-.live-page h1{
-    text-align:center;
-    color:#e91e63;
-    margin-bottom:40px;
+.live-hero {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.score-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:25px;
+.live-eyebrow {
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
 }
 
-.score-card{
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,.1);
-    text-align:center;
+.live-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(30px, 4.5vw, 48px);
+  color: var(--color-text);
 }
 
-.score-card h2{
-    color:#e91e63;
+.live-refresh {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.score-card p{
-    font-weight:bold;
-    color:green;
+.live-refresh .dot,
+.score-live-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-success);
+  display: inline-block;
+  animation: live-blink 1.4s ease-in-out infinite;
+}
+
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.live-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.live-tab {
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.live-tab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.live-tab.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.live-section {
+  max-width: 1100px;
+  margin: 0 auto 44px;
+}
+
+.live-section h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--color-text);
+  margin-bottom: 18px;
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.score-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 20px;
+  transition: border-color 0.3s;
+}
+
+.score-card:hover {
+  border-color: var(--color-primary);
+}
+
+.score-card.is-live {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.score-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.score-sport {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.score-live-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-success);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.score-event {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.score-teams {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.score-team {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.score-team-name {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.score-team-line {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--color-gold);
+  text-align: right;
+}
+
+.score-result {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-success);
+  margin-top: 12px;
+}
+
+.score-status-text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+.score-highlight {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+}
+
+.live-empty,
+.live-note {
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.live-note {
+  max-width: 680px;
+  margin: 30px auto 0;
+  line-height: 1.6;
 }

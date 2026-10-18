@@ -1,6 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --color-bg: #04080f;
+  --color-surface: #0b1120;
+  --color-surface-raised: #111827;
+  --color-primary: #e11d85;
+  --color-primary-hover: #be185d;
+  --color-gold: #f59e0b;
+  --color-indigo: #6366f1;
+  --color-success: #10b981;
+  --color-text: #f9fafb;
+  --color-text-muted: #6b7280;
+  --color-border: #1f2937;
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", Arial, Helvetica, sans-serif;
+  --font-mono: "Space Mono", "Courier New", monospace;
+}
+
 html {
   scroll-behavior: smooth;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -8,10 +29,6 @@ html {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   background-color: #ffffff;
-}
-
-html {
-  scroll-behavior: smooth;
 }

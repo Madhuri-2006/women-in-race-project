@@ -1,135 +1,200 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import { getAthletes } from "../services/athleteService";
+import {
+  generateInspiration,
+  matchAthlete,
+  hasApiKey,
+} from "../services/inspireService";
+import { pickFallback, FIELDS, NEEDS } from "../data/inspireFallbacks";
+import "./Inspire.css";
+
+const LOADING_LINES = [
+  "Reading her story…",
+  "Finding your connection…",
+  "Crafting your message…",
+];
 
 function Inspire() {
   const [athletes, setAthletes] = useState([]);
-  const [search, setSearch] = useState("");
+  const [struggle, setStruggle] = useState("");
+  const [field, setField] = useState(FIELDS[0]);
+  const [need, setNeed] = useState(NEEDS[0]);
+
+  const [phase, setPhase] = useState("form"); // form | loading | result
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [loadingLine, setLoadingLine] = useState(0);
+  const lineTimer = useRef(null);
 
   useEffect(() => {
-    async function loadAthletes() {
-      const data = await getAthletes();
-      setAthletes(data);
-    }
-
-    loadAthletes();
+    getAthletes()
+      .then(setAthletes)
+      .catch((err) => console.error("Inspire: failed to load athletes", err));
   }, []);
 
-  const filteredAthletes = athletes.filter((athlete) =>
-    athlete.name.toLowerCase().includes(search.toLowerCase())
-  );
+  useEffect(() => {
+    if (phase === "loading") {
+      lineTimer.current = setInterval(() => {
+        setLoadingLine((i) => (i + 1) % LOADING_LINES.length);
+      }, 1600);
+    }
+    return () => clearInterval(lineTimer.current);
+  }, [phase]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (struggle.trim().length < 10) {
+      setError("Tell us a little more about what you're going through.");
+      return;
+    }
+    setError("");
+    setPhase("loading");
+    setLoadingLine(0);
+
+    let outcome;
+    try {
+      outcome = await generateInspiration({ struggle, field, need, athletes });
+    } catch (err) {
+      if (hasApiKey()) console.warn("Inspire: AI call failed, using fallback —", err);
+      outcome = pickFallback({ struggle, need });
+    }
+
+    const matched = matchAthlete(outcome.athlete, athletes);
+    setResult({
+      ...outcome,
+      athleteId: matched?.id ?? null,
+      sport: outcome.sport || matched?.sport || "",
+    });
+    setPhase("result");
+  };
+
+  const reset = () => {
+    setResult(null);
+    setError("");
+    setPhase("form");
+  };
+
+  const handleShare = async () => {
+    if (!result) return;
+    const text = `My champion is ${result.athlete}.\n\n${result.message}\n\n— via Women In Race, ${window.location.origin}/inspire`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      setCopied(false);
+    }
+  };
 
   return (
     <Layout>
-      <div
-        style={{
-          maxWidth: "1300px",
-          margin: "40px auto",
-          padding: "20px",
-        }}
-      >
-        <h1
-          style={{
-            textAlign: "center",
-            color: "#e91e63",
-            marginBottom: "10px",
-          }}
-        >
-          🌟 Inspire Me
-        </h1>
+      <div className="inspire-page">
+        <div className="inspire-hero">
+          <p className="inspire-eyebrow">AI INSPIRE ME</p>
+          <h1>
+            Find Your <span className="accent">Champion</span>
+          </h1>
+          <p className="inspire-sub">
+            Tell us what you're going through. We'll find the athlete whose story speaks
+            to yours.
+          </p>
+        </div>
 
-        <p
-          style={{
-            textAlign: "center",
-            color: "#666",
-            marginBottom: "30px",
-          }}
-        >
-          Every champion started with a dream. Read about India's inspiring women athletes.
-        </p>
+        {phase === "form" && (
+          <form className="inspire-card" onSubmit={handleSubmit}>
+            {error && <div className="inspire-error">{error}</div>}
 
-        <input
-          type="text"
-          placeholder="Search Athlete..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "14px",
-            fontSize: "16px",
-            marginBottom: "30px",
-            borderRadius: "8px",
-            border: "1px solid #ccc",
-          }}
-        />
+            <label htmlFor="struggle">What are you struggling with right now?</label>
+            <textarea
+              id="struggle"
+              rows={5}
+              placeholder="e.g. I'm a first-generation college student and I feel like I don't belong in engineering…"
+              value={struggle}
+              onChange={(e) => setStruggle(e.target.value)}
+            />
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
-            gap: "25px",
-          }}
-        >
-          {filteredAthletes.map((athlete) => (
-            <div
-              key={athlete.id}
-              style={{
-                background: "#fff",
-                borderRadius: "12px",
-                overflow: "hidden",
-                boxShadow: "0 5px 15px rgba(0,0,0,.1)",
-              }}
-            >
-              <img
-                src={`/images/athletes/${athlete.image}`}
-                alt={athlete.name}
-                style={{
-                  width: "100%",
-                  height: "260px",
-                  objectFit: "cover",
-                }}
-              />
-
-              <div style={{ padding: "20px" }}>
-                <h2>{athlete.name}</h2>
-
-                <p style={{ color: "#e91e63", fontWeight: "bold" }}>
-                  {athlete.sport}
-                </p>
-
-                <p>
-                  <strong>State:</strong> {athlete.state}
-                </p>
-
-                <p style={{ marginTop: "15px", color: "#555" }}>
-                  {athlete.bio
-                    ? athlete.bio
-                    : "Every athlete has a journey filled with dedication, discipline, hard work and determination. They inspire millions to dream big and never give up."}
-                </p>
-
-                <button
-                  style={{
-                    marginTop: "15px",
-                    background: "#e91e63",
-                    color: "white",
-                    border: "none",
-                    padding: "10px 18px",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    alert(
-                      athlete.bio ||
-                        `${athlete.name} is one of India's inspiring athletes who has dedicated years of hard work to achieve success.`
-                    )
-                  }
-                >
-                  Read Story
-                </button>
+            <div className="inspire-selects">
+              <div>
+                <label htmlFor="field">What field are you in?</label>
+                <select id="field" value={field} onChange={(e) => setField(e.target.value)}>
+                  {FIELDS.map((f) => (
+                    <option key={f}>{f}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="need">What do you need most right now?</label>
+                <select id="need" value={need} onChange={(e) => setNeed(e.target.value)}>
+                  {NEEDS.map((n) => (
+                    <option key={n}>{n}</option>
+                  ))}
+                </select>
               </div>
             </div>
-          ))}
-        </div>
+
+            <button type="submit" className="inspire-btn">
+              <span className="sparkle">✦</span> Find My Champion →
+            </button>
+
+            {!hasApiKey() && (
+              <p className="inspire-note">
+                Running on the curated story library. Add an Anthropic API key to
+                <code> .env </code> to generate personalised messages with Claude.
+              </p>
+            )}
+          </form>
+        )}
+
+        {phase === "loading" && (
+          <div className="inspire-loading">
+            <div className="inspire-pulse" />
+            <p>{LOADING_LINES[loadingLine]}</p>
+          </div>
+        )}
+
+        {phase === "result" && result && (
+          <div className="inspire-result">
+            <p className="inspire-result-eyebrow">YOUR CHAMPION IS</p>
+            <h2>{result.athlete}</h2>
+            {result.sport && <span className="inspire-sport-badge">{result.sport}</span>}
+
+            <p className="inspire-message">{result.message}</p>
+
+            {result.keyMoment && (
+              <div className="inspire-keymoment">
+                <span className="inspire-keymoment-label">KEY MOMENT</span>
+                <p>{result.keyMoment}</p>
+              </div>
+            )}
+
+            <div className="inspire-actions">
+              {result.athleteId && (
+                <Link to={`/athletes/${result.athleteId}`} className="inspire-btn">
+                  Read her full story →
+                </Link>
+              )}
+              <button type="button" className="inspire-btn-ghost" onClick={handleShare}>
+                {copied ? "Copied!" : "Share this →"}
+              </button>
+              <button type="button" className="inspire-link-btn" onClick={reset}>
+                Find another champion
+              </button>
+            </div>
+
+            <p className="inspire-source">
+              {result.source === "ai"
+                ? "Written just now by Claude, matched from real athlete records."
+                : "Matched from our curated story library."}
+            </p>
+          </div>
+        )}
+
+        <p className="inspire-browse">
+          Prefer to browse? <Link to="/athletes">See every athlete →</Link>
+        </p>
       </div>
     </Layout>
   );

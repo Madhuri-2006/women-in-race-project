@@ -1,0 +1,129 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---- Roles ------------------------------------------------------------
+    // An admin is anyone whose (verified) email has a doc in /admins.
+    //   admins/{lowercased email} → { role: "admin" | "superadmin" }
+    // Bootstrap the first super admin by creating that doc by hand in the
+    // Firebase console; after that, super admins manage the list in-app.
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function myEmail() {
+      return request.auth.token.email.lower();
+    }
+
+    function hasVerifiedEmail() {
+      return signedIn()
+        && request.auth.token.email != null
+        && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return hasVerifiedEmail()
+        && exists(/databases/$(database)/documents/admins/$(myEmail()));
+    }
+
+    function isSuperAdmin() {
+      return isAdmin()
+        && get(/databases/$(database)/documents/admins/$(myEmail())).data.role == "superadmin";
+    }
+
+    match /admins/{email} {
+      // Each user may check their own entry (that's how the app learns the
+      // role); admins can see the full list; only super admins edit it.
+      allow read: if isAdmin() || (hasVerifiedEmail() && myEmail() == email);
+      allow write: if isSuperAdmin();
+    }
+
+    match /adminLog/{entryId} {
+      allow read, create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // ---- Site content: public read, admin write ---------------------------
+
+    match /athletes/{athleteId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /liveScores/{scoreId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /quizQuestions/{questionId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ---- Community letters -----------------------------------------------
+    // Anyone reads; signed-in users create their own; only admins can hide
+    // (flip `hidden`) or delete.
+
+    match /letters/{athleteId}/messages/{messageId} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.resource.data.authorId == request.auth.uid
+        && !('hidden' in request.resource.data);
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hidden']);
+      allow delete: if isAdmin();
+    }
+
+    // Collection-group read for the moderation queue.
+    match /{path=**}/messages/{messageId} {
+      allow read: if true;
+    }
+
+    // ---- Quiz ---------------------------------------------------------------
+
+    // One daily result per player per day; immutable once written.
+    match /quizScores/{resultId} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && resultId == request.resource.data.date + "_" + request.auth.uid
+        && request.resource.data.score is int
+        && request.resource.data.score >= 0
+        && request.resource.data.score <= 2000
+        && request.resource.data.correct is int
+        && request.resource.data.total is int
+        && request.resource.data.correct <= request.resource.data.total
+        && request.resource.data.total <= 20;
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // Running totals. A player can only add one day's result at a time, and
+    // only in the same write that creates that day's quizScores doc.
+    match /players/{uid} {
+      allow read: if true;
+      allow create, update: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.totalPoints is int
+        && request.resource.data.totalPoints
+             <= (resource == null ? 0 : resource.data.totalPoints) + 2000
+        && (resource == null || resource.data.lastPlayed != request.resource.data.lastPlayed)
+        && existsAfter(/databases/$(database)/documents/quizScores/$(request.resource.data.lastPlayed + "_" + uid));
+      // Admin reset from the moderation panel.
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---- Private user data --------------------------------------------------
+
+    match /users/{userId}/bookmarks/{bookmarkId} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+    }
+  }
+}

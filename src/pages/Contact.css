@@ -4,18 +4,6 @@
     padding:60px 20px;
 }
 
-.contact-page h1{
-    text-align:center;
-    color:#e91e63;
-    font-size:40px;
-}
-
-.contact-subtitle{
-    text-align:center;
-    color:#666;
-    margin:15px 0 40px;
-}
-
 .contact-form{
     display:flex;
     flex-direction:column;

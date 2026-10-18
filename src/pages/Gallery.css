@@ -4,20 +4,6 @@
     padding:50px 20px;
 }
 
-.gallery-page h1{
-    text-align:center;
-    color:#e91e63;
-    font-size:40px;
-    margin-bottom:15px;
-}
-
-.gallery-subtitle{
-    text-align:center;
-    color:#666;
-    margin-bottom:50px;
-    font-size:18px;
-}
-
 .gallery-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(300px,1fr));

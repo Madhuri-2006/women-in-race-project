@@ -1,0 +1,37 @@
+/* Shared heading block for the site's light-theme pages (Athletes, Events,
+   Gallery, Contact) — keeps every page title using the same typographic
+   system as the dark flagship pages: an eyebrow line for the magenta accent,
+   Playfair Display for the title, muted Inter for the subtitle. The magenta
+   stays on the eyebrow only, per the design system's "use it sparingly"
+   rule — titles are dark, not pink. */
+
+.page-heading {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 44px;
+}
+
+.page-heading-eyebrow {
+  font-family: var(--font-body, "Inter", sans-serif);
+  color: var(--color-primary, #e11d85);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+
+.page-heading-title {
+  font-family: var(--font-display, "Playfair Display", serif);
+  font-weight: 800;
+  font-size: clamp(28px, 4.2vw, 42px);
+  color: #16181d;
+  letter-spacing: -0.01em;
+}
+
+.page-heading-subtitle {
+  font-family: var(--font-body, "Inter", sans-serif);
+  color: #667085;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 14px;
+}
